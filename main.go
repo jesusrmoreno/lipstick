@@ -27,6 +27,7 @@ func init() {
 	}
 }
 
+// install adds the hook to this program to the local git repo
 func install() {
 	if _, err := os.Stat(pwd + "/.git"); err != nil {
 		log.Fatal("fatal: Not a git repository (or any of the parent directories): .git")
@@ -35,7 +36,7 @@ func install() {
 	defer f.Close()
 	_, werr := f.WriteString(hook)
 	if werr != nil || err != nil {
-		log.Fatal("fatal: unable to create the prepare-commit-msg hook!", werr, err)
+		log.Fatal("fatal: unable to create the commit-msg hook!", werr, err)
 	}
 	log.Println("created hook for ", pwd)
 }
@@ -45,28 +46,52 @@ func Run(c *cli.Context) {
 	getopt.Parse()
 	args := getopt.Args()
 	msg := strings.Join(args, " ")
-	cfg := loadEmojiMap()
+	cfg, err := loadEmojiMap()
+	if err != nil {
+		log.Fatal("fatal: could not load config", err)
+	}
 	if msg != "" {
 		fmt.Println(replace(cfg, msg))
 	} else {
-		os.Exit(1)
+		log.Fatal("fatal: no message given")
 	}
 }
 
-func loadEmojiMap() *Config {
-	wrds := Config{}
-	if _, err := toml.DecodeFile(pwd+"/.emojifyrc", &wrds); err != nil {
-		data, err := Asset("config/emoji.toml")
-		if err != nil {
-			log.Fatal("Fatal: No config file found")
-		}
-		if _, err := toml.Decode(string(data), &wrds); err != nil {
-			log.Fatal(err)
+// loadEmojiMap loads the config file into our config and fallsback on the
+// default built in config
+func loadEmojiMap() (*Config, error) {
+	cfg := &Config{}
+	if _, err := loadLocalConfig(cfg); err != nil {
+		if _, err := loadDefaultConfig(cfg); err != nil {
+			return nil, err
 		}
 	}
-	return &wrds
+	return cfg, nil
 }
 
+// loadLocalConfig attempts to load the local config file
+func loadLocalConfig(cfg *Config) (*Config, error) {
+	if _, err := toml.DecodeFile(pwd+"/.emojifyrc", &cfg); err != nil {
+		return nil, err
+	}
+	return cfg, nil
+}
+
+// loadDefaultConfig attempts to load the builtin config file from the bindata
+// file.
+func loadDefaultConfig(cfg *Config) (*Config, error) {
+	data, err := Asset("config/emoji.toml")
+	if err != nil {
+		return nil, err
+	}
+	if _, err := toml.Decode(string(data), &cfg); err != nil {
+		return nil, err
+	}
+	return cfg, nil
+}
+
+// replace finds words that fit our params in the msg and replaces them with
+// the words defined in our config file.
 func replace(cfg *Config, msg string) string {
 	words := strings.Split(msg, " ")
 	for i, w := range words {
@@ -85,7 +110,7 @@ func main() {
 	app.Name = "emojify"
 	app.Usage = "Make your git commits more expressive"
 	app.Action = Run
-	app.Version = "0.2.5"
+	app.Version = "0.3.6"
 	app.Commands = []cli.Command{
 		{
 			Name:    "install",
