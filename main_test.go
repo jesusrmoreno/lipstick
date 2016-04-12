@@ -18,7 +18,6 @@ func init() {
 }
 
 func TestReplace(t *testing.T) {
-
 	Convey("Given a message with no key words", t, func() {
 		msg := "Hello world I am a message with no keywords"
 		Convey("The message should be the same as what was put in", func() {
@@ -34,5 +33,4 @@ func TestReplace(t *testing.T) {
 			So(replace(cfg, msg), ShouldEqual, out)
 		})
 	})
-
 }
