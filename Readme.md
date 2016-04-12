@@ -49,7 +49,7 @@ configuration = ":snowflake:"
 
 To override these you can create a .lipstickrc file (this file must follow toml
   syntax) in the same directory as your git folder. For instance the file used
-  in this config is as follows:
+  in this app is as follows:
 ```toml
 [commitKinds]
 format = ":art:"
