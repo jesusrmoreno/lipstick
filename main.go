@@ -17,7 +17,7 @@ type Config struct {
 }
 
 var pwd string
-var hook = "\n# simplifies emoji usage \nemojify \"`cat $1`\" > \"$1\""
+var hook = "\n# simplifies emoji usage \nlipstick \"`cat $1`\" > \"$1\""
 
 func init() {
 	var err error
@@ -71,7 +71,7 @@ func loadEmojiMap() (*Config, error) {
 
 // loadLocalConfig attempts to load the local config file
 func loadLocalConfig(cfg *Config) (*Config, error) {
-	if _, err := toml.DecodeFile(pwd+"/.emojifyrc", &cfg); err != nil {
+	if _, err := toml.DecodeFile(pwd+"/.lipstickrc", &cfg); err != nil {
 		return nil, err
 	}
 	return cfg, nil
@@ -80,7 +80,7 @@ func loadLocalConfig(cfg *Config) (*Config, error) {
 // loadDefaultConfig attempts to load the builtin config file from the bindata
 // file.
 func loadDefaultConfig(cfg *Config) (*Config, error) {
-	data, err := Asset("config/emoji.toml")
+	data, err := Asset("config/lipstickrc.toml")
 	if err != nil {
 		return nil, err
 	}
@@ -107,10 +107,10 @@ func replace(cfg *Config, msg string) string {
 
 func main() {
 	app := cli.NewApp()
-	app.Name = "emojify"
+	app.Name = "lipstick"
 	app.Usage = "Make your git commits more expressive"
 	app.Action = Run
-	app.Version = "0.3.6"
+	app.Version = "0.4.7"
 	app.Commands = []cli.Command{
 		{
 			Name:    "install",
