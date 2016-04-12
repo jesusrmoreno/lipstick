@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/jesusrmoreno/emojify",
+	"ImportPath": "github.com/jesusrmoreno/lipstick",
 	"GoVersion": "go1.6",
 	"GodepVersion": "v60",
 	"Deps": [
@@ -12,6 +12,53 @@
 			"ImportPath": "github.com/codegangsta/cli",
 			"Comment": "1.2.0-143-ga65b733",
 			"Rev": "a65b733b303f0055f8d324d805f393cd3e7a7904"
+		},
+		{
+			"ImportPath": "github.com/gopherjs/gopherjs/js",
+			"Comment": "go1.5-43-gf10744b",
+			"Rev": "f10744b1512e8cf31ec55b49ddeb1c93ed2de46e"
+		},
+		{
+			"ImportPath": "github.com/jtolds/gls",
+			"Rev": "8ddce2a84170772b95dd5d576c48d517b22cac63"
+		},
+		{
+			"ImportPath": "github.com/natefinch/atomic",
+			"Rev": "a62ce929ffcc871a51e98c6eba7b20321e3ed62d"
+		},
+		{
+			"ImportPath": "github.com/pborman/getopt",
+			"Rev": "ec82d864f599c39673eef89f91b93fa5576567a1"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/assertions",
+			"Comment": "1.6.0",
+			"Rev": "e9a2f6771d97c709b2f7609fdf89ebde8b64c926"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/assertions/internal/go-render/render",
+			"Comment": "1.6.0",
+			"Rev": "e9a2f6771d97c709b2f7609fdf89ebde8b64c926"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/assertions/internal/oglematchers",
+			"Comment": "1.6.0",
+			"Rev": "e9a2f6771d97c709b2f7609fdf89ebde8b64c926"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/goconvey/convey",
+			"Comment": "1.6.1-6-g81a3e75",
+			"Rev": "81a3e75a5feb6bed21933ac8ef3116017afd993f"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/goconvey/convey/gotest",
+			"Comment": "1.6.1-6-g81a3e75",
+			"Rev": "81a3e75a5feb6bed21933ac8ef3116017afd993f"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/goconvey/convey/reporting",
+			"Comment": "1.6.1-6-g81a3e75",
+			"Rev": "81a3e75a5feb6bed21933ac8ef3116017afd993f"
 		}
 	]
 }
