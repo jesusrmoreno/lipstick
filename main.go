@@ -115,7 +115,7 @@ func loadDefaultConfig(cfg *Config) (*Config, error) {
 // the words defined in our config file.
 func replace(cfg *Config, msg string) string {
 	for key, value := range cfg.Words {
-		msg = strings.Replace(msg, ":"+key, value, -1)
+		msg = strings.Replace(msg, ":"+key+":", value, -1)
 	}
 	return msg
 }
@@ -125,7 +125,7 @@ func main() {
 	app.Name = "lipstick"
 	app.Usage = "Make your git commits more expressive"
 	app.Action = Run
-	app.Version = "3.1.0"
+	app.Version = "4.1.0"
 	app.Commands = []cli.Command{
 		{
 			Name:    "install",
