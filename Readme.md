@@ -24,3 +24,9 @@ lipstick install
 ```
 This will add the git commit message hook to turn your keywords into github
 emoji.
+
+# Uninstall hook
+To remove the hook simply run:
+```bash
+lipstick uninstall
+```
