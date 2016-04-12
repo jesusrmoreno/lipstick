@@ -16,7 +16,7 @@ type Config struct {
 }
 
 var pwd string
-var hook = "\n# turn emotes to emoji \nemojify -m \"`cat $1`\" > \"$1\""
+var hook = "\n# simplifies emoji usage \nemojify -m \"`cat $1`\" > \"$1\""
 
 func init() {
 	var err error
@@ -34,9 +34,9 @@ func install() {
 	defer f.Close()
 	_, werr := f.WriteString(hook)
 	if werr != nil || err != nil {
-		log.Fatal("Couldn't add the prepare-commit-msg hook!", werr, err)
+		log.Fatal("fatal: unable to create the prepare-commit-msg hook!", werr, err)
 	}
-	log.Print("created hook for ", pwd)
+	log.Println("created hook for ", pwd)
 }
 
 // Run ...
