@@ -40,7 +40,7 @@ func install() {
 	log.Println("created hook for ", pwd)
 }
 
-// Run ...
+// Run is our main function
 func Run(c *cli.Context) {
 	getopt.Parse()
 	args := getopt.Args()
@@ -81,12 +81,11 @@ func replace(cfg *Config, msg string) string {
 }
 
 func main() {
-	// installHook()
 	app := cli.NewApp()
 	app.Name = "emojify"
 	app.Usage = "Make your git commits more expressive"
 	app.Action = Run
-	app.Version = "0.2.4"
+	app.Version = "0.2.5"
 	app.Commands = []cli.Command{
 		{
 			Name:    "install",
@@ -97,11 +96,5 @@ func main() {
 			},
 		},
 	}
-	// app.Flags = []cli.Flag{
-	// 	cli.StringFlag{
-	// 		Name:  "message, m",
-	// 		Usage: "The message to commit",
-	// 	},
-	// }
 	app.Run(os.Args)
 }
