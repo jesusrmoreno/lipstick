@@ -10,7 +10,11 @@ security = ":lock:"
 ui = ":lipstick:"
 wip = ":construction:"
 tags = ":bookmark:"
-init = ":tada:"
+initial = ":tada:"
 logging = ":speaker:"
 removeLogging = ":mute:"
 feature = ":sparkles:"
+configuration = ":snowflake:"
+
+# Not in the default config
+license = ":copyright:"
