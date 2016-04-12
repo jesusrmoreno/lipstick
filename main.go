@@ -125,7 +125,7 @@ func main() {
 	app.Name = "lipstick"
 	app.Usage = "Make your git commits more expressive"
 	app.Action = Run
-	app.Version = "4.1.0"
+	app.Version = "4.2.0"
 	app.Commands = []cli.Command{
 		{
 			Name:    "install",
