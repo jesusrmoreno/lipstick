@@ -31,7 +31,7 @@ func install() {
 	if _, err := os.Stat(pwd + "/.git"); err != nil {
 		log.Fatal("fatal: Not a git repository (or any of the parent directories): .git")
 	}
-	f, err := os.OpenFile(pwd+"/.git/hooks/prepare-commit-msg", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0777)
+	f, err := os.OpenFile(pwd+"/.git/hooks/commit-msg", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0777)
 	defer f.Close()
 	_, werr := f.WriteString(hook)
 	if werr != nil || err != nil {
@@ -48,6 +48,8 @@ func Run(c *cli.Context) {
 	cfg := loadEmojiMap()
 	if msg != "" {
 		fmt.Println(replace(cfg, msg))
+	} else {
+		os.Exit(1)
 	}
 }
 
@@ -84,7 +86,7 @@ func main() {
 	app.Name = "emojify"
 	app.Usage = "Make your git commits more expressive"
 	app.Action = Run
-	app.Version = "0.1.4"
+	app.Version = "0.2.4"
 	app.Commands = []cli.Command{
 		{
 			Name:    "install",
