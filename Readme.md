@@ -1,5 +1,17 @@
 # Lipstick
-:lipstick: A simple app to make your git commit messages more expressive
+:lipstick: A simple app to make your git commit messages more expressive.  
+Instead of remembering complicated and unrelated emoji names you can write
+things like:
+```
+:tests Added testing
+```
+and it'll get turned into:
+```
+:white_check_mark: Added testing
+```
+Which will show up as
+:white_check_mark: Added testing
+
 
 # Install
 ```bash
