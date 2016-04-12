@@ -25,7 +25,56 @@ lipstick install
 This will add the git commit message hook to turn your keywords into github
 emoji.
 
-# Uninstall hook
+# Setup
+By default lipstick uses the following mappings
+```toml
+[commitKinds]
+format = ":art:"
+performance = ":racehorse:"
+docs = ":books:"
+bugfix = ":bug:"
+crucial = ":ambulance:"
+remove = ":fire:"
+tests = ":white_check_mark:"
+security = ":lock:"
+ui = ":lipstick:"
+wip = ":construction:"
+tags = ":bookmark:"
+initial = ":tada:"
+logging = ":speaker:"
+removeLogging = ":mute:"
+feature = ":sparkles:"
+configuration = ":snowflake:"
+```
+
+To override these you can create a .lipstickrc file in the same directory as
+your git folder. For instance the file used in this config is as follows:
+```toml
+[commitKinds]
+format = ":art:"
+performance = ":racehorse:"
+docs = ":books:"
+bugfix = ":bug:"
+crucial = ":ambulance:"
+remove = ":fire:"
+tests = ":white_check_mark:"
+security = ":lock:"
+ui = ":lipstick:"
+wip = ":construction:"
+tags = ":bookmark:"
+init = ":tada:"
+logging = ":speaker:"
+removeLogging = ":mute:"
+feature = ":sparkles:"
+configuration = ":snowflake:"
+license = ":copyright:"
+release = ":gem:"
+vendor = ":package:"
+chore = ":information_source:"
+```
+
+
+# Uninstall
 To remove the hook simply run:
 ```bash
 lipstick uninstall
