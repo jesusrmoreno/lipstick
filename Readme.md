@@ -3,13 +3,13 @@
 Instead of remembering complicated and unrelated emoji names you can write
 things like:
 ```
-:tests Added testing
+:tests: Added testing
 ```
 and it'll get turned into:
 ```
 :white_check_mark: Added testing
 ```
-Which will show up as  
+Which will show up as
 :white_check_mark: Added testing
 
 
