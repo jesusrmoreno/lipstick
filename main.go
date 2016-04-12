@@ -93,16 +93,10 @@ func loadDefaultConfig(cfg *Config) (*Config, error) {
 // replace finds words that fit our params in the msg and replaces them with
 // the words defined in our config file.
 func replace(cfg *Config, msg string) string {
-	words := strings.Split(msg, " ")
-	for i, w := range words {
-		if strings.HasPrefix(w, ":") {
-			raw := strings.TrimPrefix(w, ":")
-			if cfg.Words[raw] != "" {
-				words[i] = cfg.Words[raw]
-			}
-		}
+	for key, value := range cfg.Words {
+		msg = strings.Replace(msg, ":"+key, value, -1)
 	}
-	return strings.Join(words, " ")
+	return msg
 }
 
 func main() {
