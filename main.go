@@ -56,7 +56,10 @@ func uninstall() {
 	old := string(d)
 	new := strings.Replace(old, "\n# simplifies emoji usage", "", -1)
 	new = strings.Replace(new, "\nlipstick \"`cat $1`\" > \"$1\"", "", -1)
-	atomic.WriteFile(pwd+"/.git/hooks/commit-msg", strings.NewReader(new))
+	out := strings.NewReader(new)
+	if err := atomic.WriteFile(pwd+"/.git/hooks/commit-msg", out); err != nil {
+		log.Fatal("fatal: unable to remove commit-msg hook", err)
+	}
 }
 
 // Run is our main function
