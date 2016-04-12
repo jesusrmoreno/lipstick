@@ -2,12 +2,14 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"strings"
 
 	"github.com/BurntSushi/toml"
 	"github.com/codegangsta/cli"
+	"github.com/natefinch/atomic"
 	"github.com/pborman/getopt"
 )
 
@@ -39,6 +41,25 @@ func install() {
 		log.Fatal("fatal: unable to create the commit-msg hook!", werr, err)
 	}
 	log.Println("created hook for ", pwd)
+}
+
+func uninstall() {
+	if _, err := os.Stat(pwd + "/.git"); err != nil {
+		log.Fatal("fatal: Not a git repository (or any of the parent directories): .git")
+	}
+	f, err := os.Open(pwd + "/.git/hooks/commit-msg")
+	d, rerr := ioutil.ReadAll(f)
+	if err != nil || rerr != nil {
+		log.Fatal("fatal: unable to remove commit-msg hook", rerr, err)
+	}
+	f.Close()
+	old := string(d)
+	new := strings.Replace(old, "\n# simplifies emoji usage", "", -1)
+	new = strings.Replace(new, "\nlipstick \"`cat $1`\" > \"$1\"", "", -1)
+	out := strings.NewReader(new)
+	if err := atomic.WriteFile(pwd+"/.git/hooks/commit-msg", out); err != nil {
+		log.Fatal("fatal: unable to remove commit-msg hook", err)
+	}
 }
 
 // Run is our main function
@@ -104,7 +125,7 @@ func main() {
 	app.Name = "lipstick"
 	app.Usage = "Make your git commits more expressive"
 	app.Action = Run
-	app.Version = "1.0.0"
+	app.Version = "1.1.0"
 	app.Commands = []cli.Command{
 		{
 			Name:    "install",
@@ -112,6 +133,13 @@ func main() {
 			Usage:   "initialize the git hook",
 			Action: func(c *cli.Context) {
 				install()
+			},
+		}, {
+			Name:    "uninstall",
+			Aliases: []string{"u"},
+			Usage:   "remove the git hook",
+			Action: func(c *cli.Context) {
+				uninstall()
 			},
 		},
 	}
