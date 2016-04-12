@@ -8,6 +8,7 @@ import (
 
 	"github.com/BurntSushi/toml"
 	"github.com/codegangsta/cli"
+	"github.com/pborman/getopt"
 )
 
 // Config holds the emoji configuration
@@ -16,7 +17,7 @@ type Config struct {
 }
 
 var pwd string
-var hook = "\n# simplifies emoji usage \nemojify -m \"`cat $1`\" > \"$1\""
+var hook = "\n# simplifies emoji usage \nemojify \"`cat $1`\" > \"$1\""
 
 func init() {
 	var err error
@@ -41,8 +42,10 @@ func install() {
 
 // Run ...
 func Run(c *cli.Context) {
+	getopt.Parse()
+	args := getopt.Args()
+	msg := strings.Join(args, " ")
 	cfg := loadEmojiMap()
-	msg := c.String("message")
 	if msg != "" {
 		fmt.Println(replace(cfg, msg))
 	}
@@ -92,11 +95,11 @@ func main() {
 			},
 		},
 	}
-	app.Flags = []cli.Flag{
-		cli.StringFlag{
-			Name:  "message, m",
-			Usage: "The message to commit",
-		},
-	}
+	// app.Flags = []cli.Flag{
+	// 	cli.StringFlag{
+	// 		Name:  "message, m",
+	// 		Usage: "The message to commit",
+	// 	},
+	// }
 	app.Run(os.Args)
 }
