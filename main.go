@@ -120,6 +120,20 @@ func replace(cfg *Config, msg string) string {
 	return msg
 }
 
+func createConfig() {
+	if _, err := os.Stat(".lipstickrc"); !os.IsNotExist(err) {
+		log.Fatal("fatal: .lipstickrc exists")
+	}
+	data, err := Asset("config/lipstickrc.toml")
+	if err != nil {
+		log.Fatal("fatal: could not load default .lipstickrc", err)
+	}
+	r := strings.NewReader(string(data))
+	if err := atomic.WriteFile(".lipstickrc", r); err != nil {
+		log.Fatal("fatal: could not generate .lipstickrc", err)
+	}
+}
+
 func main() {
 	app := cli.NewApp()
 	app.Name = "lipstick"
@@ -140,6 +154,13 @@ func main() {
 			Usage:   "remove the git hook",
 			Action: func(c *cli.Context) {
 				uninstall()
+			},
+		}, {
+			Name:    "initialize",
+			Aliases: []string{"init"},
+			Usage:   "creates a .lipstickrc file if one does not exist",
+			Action: func(c *cli.Context) {
+				createConfig()
 			},
 		},
 	}
