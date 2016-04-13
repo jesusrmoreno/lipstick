@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"sort"
 	"strings"
 
 	"github.com/BurntSushi/toml"
@@ -120,6 +121,7 @@ func replace(cfg *Config, msg string) string {
 	return msg
 }
 
+// createConfig writes the default .lipstickrc to a file.
 func createConfig() {
 	if _, err := os.Stat(".lipstickrc"); !os.IsNotExist(err) {
 		log.Fatal("fatal: .lipstickrc exists")
@@ -132,6 +134,45 @@ func createConfig() {
 	if err := atomic.WriteFile(".lipstickrc", r); err != nil {
 		log.Fatal("fatal: could not generate .lipstickrc", err)
 	}
+}
+
+// listAvailable shows the available mappings in alphabetical order
+func listAvailable() {
+	cfg, err := loadEmojiMap()
+	if err != nil {
+		log.Fatal("fatal: could not load config", err)
+	}
+	fmt.Println()
+
+	// Get the longest keys maxLength and create a slice of keys
+	var maxLen int
+	keys := []string{}
+	for key := range cfg.Words {
+		keys = append(keys, key)
+		if len(key) > maxLen {
+			maxLen = len(key)
+		}
+	}
+
+	// Sort keys by alpha
+	sort.Strings(keys)
+
+	var padVal int
+	var displayKey string
+	var value string
+	for _, key := range keys {
+		// Sets the padding value based on the length of the key
+		padVal = (maxLen - len(key)) + 2
+
+		displayKey = rightPad(":"+key+":", " ", padVal)
+		value = cfg.Words[key]
+		fmt.Println(displayKey, value)
+	}
+	fmt.Println()
+}
+
+func rightPad(s string, padStr string, pLen int) string {
+	return s + strings.Repeat(padStr, pLen)
 }
 
 func main() {
@@ -161,6 +202,13 @@ func main() {
 			Usage:   "creates a .lipstickrc file if one does not exist",
 			Action: func(c *cli.Context) {
 				createConfig()
+			},
+		}, {
+			Name:    "list",
+			Aliases: []string{"l"},
+			Usage:   "lists the available lipstick mappings",
+			Action: func(c *cli.Context) {
+				listAvailable()
 			},
 		},
 	}
