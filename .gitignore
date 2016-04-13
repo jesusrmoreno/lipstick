@@ -1,3 +1,5 @@
 config
 testdir
 .lipstickrc
+*.sh
+bin
