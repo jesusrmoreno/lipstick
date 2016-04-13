@@ -14,6 +14,8 @@ import (
 	"github.com/pborman/getopt"
 )
 
+var Version = "No Version Provided"
+
 // Config holds the emoji configuration
 type Config struct {
 	Words map[string]string `toml:"commitKinds"`
@@ -180,7 +182,7 @@ func main() {
 	app.Name = "lipstick"
 	app.Usage = "Make your git commits more expressive"
 	app.Action = Run
-	app.Version = "4.4.0"
+	app.Version = Version
 	app.Commands = []cli.Command{
 		{
 			Name:    "install",
